@@ -63,8 +63,8 @@ def createBackup(fileName):
 #     meanT_F                 = ColumnIndex.U
 #     minT_F                   = ColumnIndex.V
 
-class headers():
-    fieldNames = [n for n in dir(ColumnName) if "__" not in n]
+# class headers():
+    # fieldNames = [n for n in dir(ColumnName) if "__" not in n]
 
 
 
