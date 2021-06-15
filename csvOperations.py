@@ -2,6 +2,8 @@ from csv import writer, DictWriter
 from enum import Enum, auto
 from posixpath import join
 import datetime, shutil
+import pandas as pd
+
 
 def createBackup(fileName):
     shutil.copy(fileName, join(fileName, datetime.date, ".backup"))
@@ -66,6 +68,16 @@ def createBackup(fileName):
 # class headers():
     # fieldNames = [n for n in dir(ColumnName) if "__" not in n]
 
+def calcJulian(date):
+    # d = date.split("-")
+    # d = list(map(int, d))
+    # ts = pd.Timestamp(year = d[0], month=  d[1], day = d[2], 
+    #               tz = 'US/Eastern') 
+    fmt='%Y-%m-%d'
+    sdtdate = datetime.datetime.strptime(date, fmt)
+    sdtdate = sdtdate.timetuple()
+    jdate = sdtdate.tm_yday
+    return(jdate)
 
 
 def append_list_as_row(file_name, list_of_elem):
