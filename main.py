@@ -1,13 +1,14 @@
 import csv
+from os import name
 import arableAPI, plantFormulas, csvOperations
 from csv import writer
-
+from collections import defaultdict
 
 def main():
     print("Starting Program\n")
     try:
-        csvName = input("Enter the name of the CSV file you will be expanding:")
-        fromName = input("Enter the name of the CSV file from which you will draw the data")
+        csvName = input("Enter the name of the CSV file you will be expanding : ")
+        fromName = input("Enter the name of the CSV file from which you will draw the data : ")
         
     except:
         print("Invalid Input. Exiting...")
@@ -15,45 +16,56 @@ def main():
 
     # compare keys to make sure you can append correctly
     with open(csvName) as to:
-        toList = []
 
         lis = [line.split() for line in to]        # create a list of lists
-        for i in lis:   
-            if len(list) > 5:
+        for i in range(len(lis)):   
+            if len(lis[i]) > 5:
                 toListCols = lis[i]
                 break
 
-    with open(fromName) as from:
-        fromList = []
+    with open(fromName) as f:
 
-        lis = [line.split() for line in from]        # create a list of lists
-        for i in lis:    
-            if len(list) > 5:
+        lis = [line.split() for line in f]        # create a list of lists
+        for i in range(len(lis)):    
+            if len(lis[i]) > 5:
                 fromListCols = lis[i]
                 break
 
-    
-    
-    # for i in toList:
-    #     if toList[i] != fromList[i]:
-    #         print("Your csv files do not match up. You cannot append to ", csvName, "from ", fromName)
+    with open(csvName) as to:
+        with open(fromName) as f:
+            indexOfSharedItemsInFrom = {}
+            indexOfSharedItemsInTo = {}
+            both = []
 
+# unfortunately no better way than O(N^2) since we don't know any info about the cols before passing them in
+            for fromIndex, fromValue in enumerate(toListCols):
+                for toIndex, toValue in enumerate(fromListCols):
+                    if toValue == fromValue:
+                        both.append(toValue)
+                        indexOfSharedItemsInFrom[fromIndex] = fromValue
+                        indexOfSharedItemsInTo[toIndex] = toValue
 
-    with open(csvName) as f:
-        dictionaryToInsert = dict.fromkeys(toList)
+            dictionaryToInsert = dict.fromkeys(both)
+            gotColumnNames = False
 
-        gotColumnNames = False
-        lis = [line.split() for line in f]        # create a list of lists
-        for i in lis:    
-            if lis[i] == toList and gotColumnNames == False:
-                gotColumnNames = True
-            else:
-                data = lis[i]
-                csvOperations.append_dict_as_row
+            lis = [line.split() for line in f]        # create a list of lists
+            for i in range(len(lis)):
+                if gotColumnNames == False:
+                    if both in lis[i]:
+                        gotColumnNames = True
+                else:
+                    # unsure on +1
+                    for i in range(len(lis[i] + 1)):
+                        if i in indexOfSharedItemsInFrom:
+                            columnName = indexOfSharedItemsInFrom[i]
+                            dictionaryToInsert[columnName] = lis[i]
+                    
+                    print("Added ", dictionaryToInsert)
+                    csvOperations.append_dict_as_row(csvName, toListCols, dictionaryToInsert)
 
         
         
+ 
 
-
-if __name__ == "main":
+if __name__== "__main__":
     main()
