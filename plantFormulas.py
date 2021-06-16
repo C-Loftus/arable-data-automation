@@ -1,8 +1,19 @@
 
 from typing import List
 
-def celciusToF(tempInC: int):
-    return ((9/5)*(tempInC))+32
+def celciusToF(tempInC):
+    try:
+        tempInC = float(tempInC)
+    except:
+        return None
+    return format(((9 * float(tempInC)) / 5)+32, '.1f')
+
+def fToC(tempInF):
+    try:
+        tempInF = float(tempInF)
+    except:
+        return None
+    return format(((tempInF - 32) * 5) / 9, '.1f')
 
 def meanOfList(input: List):
     totalVal, totalNums = 0, 0
