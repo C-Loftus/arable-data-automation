@@ -1,6 +1,7 @@
 alias
 questions
 backup/
-*.csv
+.*
 __pycache__
 test.py
+*.csv
