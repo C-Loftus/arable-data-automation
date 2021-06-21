@@ -1,5 +1,7 @@
-from csv import writer, DictWriter
-from enum import Enum, auto
+from csv import writer, reader, DictWriter
+import csv
+import pandas as pd
+
 from posixpath import join
 import datetime, shutil
 
@@ -7,6 +9,14 @@ import datetime, shutil
 def createBackup(fileName):
     shutil.copy(fileName, join(fileName, datetime.date, ".backup"))
 
+def deleteBlankRows(out, input):
+    with open(input) as in_file:
+        with open(out, 'w') as out_file:
+            writer = csv.writer(out_file)
+            for row in csv.reader(in_file):
+                if any(field.strip() for field in row):
+                    writer.writerow(row)
+        
 
 def calcJulian(date):
     try:
@@ -26,7 +36,12 @@ def changeTimeFormat(date):
         return None
 
 def hasData(input: list):
-    return
+    defaultData = 2
+    data = 0
+    for i in input:
+        if i != None:
+            data+=1
+    return True if data > defaultData else False
 
 
 def append_list_as_row(file_name, list_of_elem):
