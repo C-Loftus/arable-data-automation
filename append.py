@@ -10,7 +10,7 @@ def appendNewRow(f, location, species):
 
     reader = csv.reader(f)
     foundHeaders = False
-    convert = pf.data.fromValueToToInd  
+    convert = pf.data.fromValueToToIndex
 
 
     for rowList in reader:
