@@ -45,6 +45,8 @@ def hasData(input: list):
 
 
 def append_list_as_row(file_name, list_of_elem):
+    if list_of_elem == None or len(list_of_elem) == 0:
+        return None
     # Open file in append mode
     with open(file_name, 'a+', newline='') as write_obj:
         # Create a writer object from csv module

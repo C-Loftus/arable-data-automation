@@ -66,12 +66,11 @@ def main():
 
         ### append data into array ########
         with open(fromName, newline='') as f:
-            listToAppend = append.appendNewRow(f, location, species)
-
-            csvOperations.append_list_as_row(toName, listToAppend)
+            append.appendNewRow(f, location, species)
 
         # clean up at the end
-        csvOperations.deleteBlankRows("newOut.csv", toName)
+        outputName = ("from " + fromName + " to " + toName).replace("csv/","")
+        csvOperations.deleteBlankRows(outputName, toName)
                     
 
 

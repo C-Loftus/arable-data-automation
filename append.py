@@ -29,30 +29,33 @@ def appendNewRow(f, location, species):
                     pass
                 t += 1
 
-        ########## calc data after putting in all given values for a row ##########
-        if csvOperations.hasData(listToAppend):
-            # calc date
-            date = listToAppend[convert["local_device_time"]]
-            if date != 0 or date != None:
-                listToAppend[convert["local_device_time"]] = csvOperations.changeTimeFormat(date)
+            ###### calc data after putting in all given values for a row ##########
+            calculateDataPoints(listToAppend, convert, location, species)
+            csvOperations.append_list_as_row(t, listToAppend)
 
-            # calc julian date
-            if listToAppend[convert["local_device_time"]] != None:
-                listToAppend[convert["julian_date"]] = \
-                csvOperations.calcJulian(listToAppend[convert["local_device_time"]])
 
-            # calc temperatures
-            maxTInCIndex= convert["cmax_temp"]
-            minTInCIndex = convert["cmin_temp"]
-            for i in range(maxTInCIndex, minTInCIndex + 1 ):
-                listToAppend[i] = pf.fToC(listToAppend[i + 4])
 
-            listToAppend[convert["farm"]] = location
-            listToAppend[convert["crop"]] = species
-            listToAppend[convert["photosynthetic_rate"]] = \
-                pf.photosyntheticRateCalc(convert["NDVI"], \
-                convert["SWdw"])
+def calculateDataPoints(listToAppend, convert, location, species):
+    if csvOperations.hasData(listToAppend):
+        # calc date
+        date = listToAppend[convert["local_device_time"]]
+        if date != 0 or date != None:
+            listToAppend[convert["local_device_time"]] = csvOperations.changeTimeFormat(date)
+        # calc julian date
+        if listToAppend[convert["local_device_time"]] != None:
+            listToAppend[convert["julian_date"]] = \
+            csvOperations.calcJulian(listToAppend[convert["local_device_time"]])
+        # calc temperatures
+        maxTInCIndex= convert["cmax_temp"]
+        minTInCIndex = convert["cmin_temp"]
+        for i in range(maxTInCIndex, minTInCIndex + 1 ):
+            listToAppend[i] = pf.fToC(listToAppend[i + 4])
 
-            print("Outputting list :", listToAppend, "\n")
-            return listToAppend
-
+        listToAppend[convert["farm"]] = location
+        listToAppend[convert["crop"]] = species
+        listToAppend[convert["photosynthetic_rate"]] = \
+            pf.photosyntheticRateCalc(convert["NDVI"], \
+            convert["SWdw"])
+    else:
+        pass
+    return
