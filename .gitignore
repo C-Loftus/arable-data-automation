@@ -5,3 +5,7 @@ __pycache__
 src/serialNums.py
 conf/
 csv/
+Pipfile
+Pipfile.lock
+*.csv
+src/*

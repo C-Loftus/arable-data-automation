@@ -2,6 +2,8 @@
 from typing import List
 from collections import defaultdict
 
+import serialNums
+
 
 class data:
     farms = {
@@ -11,6 +13,8 @@ class data:
                 "BRF": "Big Red Farm",
                 "TS" : "Isles"
         }
+
+    hoopHouse = ["A001505", "A001683", "C003649", "C003679"]
 
         # alternative spellings included just in case the users inputs data wrong
     speciesDict = {
@@ -29,20 +33,28 @@ class data:
     fromValueToToIndex    = {
                 "farm" : 0,
                 "crop" : 1,
-                "local_device_time" : 2, 
-                # "julian date" : 3,
-                "device" : 4, 
-                "cl" : 10,
-                "NDVI" : 11,
-                "ETc" :12,
-                "SWdw": 13,
-                "cmax_temp": 14,  # celcius
-                "cmean_temp": 15, # celcius
-                "cmin_temp": 16, # celcius
-                "precip": 17,
-                "max_temp": 18,  # f
-                "mean_temp": 19, # f
-                "min_temp": 20, # f,
+                "growing_environment": 2,
+                "local_device_time" : 3,
+                "julian_date": 4,
+                "device" : 5, 
+                "T_base": 6,
+                "gdd": 7,
+                "cgdd":8,
+                "observed_growth": 9,
+                "estimated_growth": 10,
+                "cl" : 11,
+                "NDVI" : 12,
+                "ETc" :13,
+                "SWdw": 14,
+                "cmax_temp": 15,  # celcius
+                "cmean_temp": 16, # celcius
+                "cmin_temp": 17, # celcius
+                "precip": 18,
+                "max_temp": 19,  # f
+                "mean_temp": 20, # f
+                "min_temp": 21, # f,
+                "photosynthetic_rate": 22,
+                "crop_water_demand": 23,
                 }                
 
 
@@ -72,9 +84,13 @@ class data:
                 21:  None,  
                 22: None,
                 23 : "precip",
+                31 : "crop_water_demand"
             }
 
-    both = ["local_device_time", "device", "cl", "NDVI", "ETc", "SWdw", "max_temp", "mean_temp", "min_temp", "precip"]
+    both = ["local_device_time", "device", 
+            "cl", "NDVI", "ETc", "SWdw", "max_temp", 
+            "mean_temp", "min_temp", "precip", 
+            "crop_water_demand"]
 
 
 def celciusToF(tempInC):
@@ -119,3 +135,9 @@ def avgThroughRange(input: List, rangeSize: int, startingIndex: int):
 
 def toBinary(input: bool):
     return 1 if input == True else 0
+
+def environment(serialNumber):
+    if serialNumber in data.hoopHouse:
+        return "hoop house"
+    else:
+        return "open field"
