@@ -113,7 +113,12 @@ def meanOfList(input: List):
         totalVal += value
     return totalVal / totalNums
 
-def photosyntheticRateCalc(NDVI: int, SWdw: int):
+def photosyntheticRateCalc(NDVI, SWdw):
+    try:
+        NDVI = float(NDVI)
+        SWdw = float(SWdw)
+    except:
+        return None
     return NDVI * SWdw
 
 def changeInNDVI(prevNDVI: int, currNDVI: int):
