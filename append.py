@@ -45,8 +45,8 @@ def calculateDataPoints(listToAppend, location, species):
             listToAppend[convert["local_device_time"]] = csvOperations.changeTimeFormat(date)
         # calc julian date
         if listToAppend[convert["local_device_time"]] != None:
-            listToAppend[convert["julian_date"]] = \
-            csvOperations.calcJulian(listToAppend[convert["local_device_time"]])
+            listToAppend[convert["julian_date"]] = csvOperations.calcJulian(listToAppend[convert["local_device_time"]])
+            print("\n\n\n\n", listToAppend[convert["local_device_time"]], listToAppend[convert["julian_date"]])
         # calc temperatures
         maxTInCIndex= convert["cmax_temp"]
         minTInCIndex = convert["cmin_temp"]
@@ -54,10 +54,11 @@ def calculateDataPoints(listToAppend, location, species):
             listToAppend[i] = pf.fToC(listToAppend[i + 4])
 
         listToAppend[convert["farm"]] = location
+        listToAppend[convert["growing_environment"]] = pf.environment(listToAppend[convert["device"]])
         listToAppend[convert["crop"]] = species
         listToAppend[convert["photosynthetic_rate"]] = \
-            pf.photosyntheticRateCalc(convert["NDVI"], \
-            convert["SWdw"])
+            pf.photosyntheticRateCalc((listToAppend[convert["NDVI"]]), \
+            (listToAppend[convert["SWdw"]]))
     else:
         pass
     return

@@ -18,7 +18,7 @@ def deleteBlankRows(out, input):
 
 def calcJulian(date):
     try:
-        fmt='%Y-%m-%d'
+        fmt='%m/%d/%Y'
         sdtdate = datetime.datetime.strptime(date, fmt)
         sdtdate = sdtdate.timetuple()
         jdate = sdtdate.tm_yday

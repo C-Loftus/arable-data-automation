@@ -71,7 +71,7 @@ def main():
 
         # clean up at the end
         outputName = (toName).replace("csv/","")
-        outputName = "csv/" + str(date.today()) + outputName
+        outputName = str(date.today()) + outputName
         csvOperations.deleteBlankRows(outputName, toName)
         drive.uploadFile(outputName)
 
