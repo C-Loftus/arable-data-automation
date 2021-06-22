@@ -10,6 +10,8 @@ This repository holds the code that was used for automating the data processing.
 ```
 pip install -r requirements.txt 
 ```
+* Create a conf folder and put your client_secrets.json inside of it.
+* Change .sampleDotEnv to .env and put your username and password inside of it.
 * Run the program with the first argument as the file you want to append to and the first file as the one you will draw data from.
 * Change the serialNums.py file (private, not uploaded to github since it contains secrets) to the folder path on Google Drive you want.
 
