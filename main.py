@@ -1,7 +1,10 @@
 import csv, sys
+from datetime import date
 import arableAPI,  csvOperations
 import plantFormulas as pf
 import append
+
+import drive
 
 
 def main():
@@ -12,16 +15,15 @@ def main():
         print("Appending to ",toName, "from ", fromName)
     except:
         print("Invalid Input. Exiting...")
-        
     if  len(sys.argv) == 1:
-        sys.exit("Error. User did not specify arguments")
+        sys.exit("Error. User did not specify either of the arguments")
     if  len(sys.argv) == 2:
-        sys.exit("You Didn't specify both arguments")
+        sys.exit("You Didn't specify the second argument")
 
 
     # compare keys to make sure you can append correctly
-    with open  (toName, newline='') as to:
-        with open(fromName, newline='') as f:
+    with open  (toName,  'a+', newline='',) as to:
+        with open(fromName,  'r', newline='') as f:
             # get the title of the farm
             location = None
             species = None
@@ -41,7 +43,6 @@ def main():
                     except KeyError:
                         print(line[3])
                         sys.exit("Crop not found in list")
-                      
 
                 if "°C" in line:
                     tempInF = False
@@ -51,7 +52,7 @@ def main():
 
             toListCols = []
             reader = csv.reader(to)
-            for row in reader:   
+            for row in reader:
                 if len(row) > 20:
                     toListCols = row
                     break
@@ -65,12 +66,15 @@ def main():
 
 
         ### append data into array ########
-        with open(fromName, newline='') as f:
-            append.appendNewRow(f, location, species)
+        with open(fromName,  'r', newline='') as f:
+            append.createRowToAppend(toName, f, location, species)
 
         # clean up at the end
-        outputName = ("from " + fromName + " to " + toName).replace("csv/","")
+        outputName = (toName).replace("csv/","")
+        outputName = "csv/" + str(date.today()) + outputName
         csvOperations.deleteBlankRows(outputName, toName)
+        drive.uploadFile(outputName)
+
                     
 
 

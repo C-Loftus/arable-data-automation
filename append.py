@@ -1,16 +1,15 @@
  # shortcut to call the converter
-import csv, sys
+import csv
 import arableAPI,  csvOperations
 import plantFormulas as pf
 
 
-def appendNewRow(f, location, species):    
+def createRowToAppend(toName, f, location, species):    
     if __debug__:
         print("\nENTERING READER APPEND LOOP\n")
 
     reader = csv.reader(f)
     foundHeaders = False
-    convert = pf.data.fromValueToToIndex
 
 
     for rowList in reader:
@@ -21,22 +20,25 @@ def appendNewRow(f, location, species):
         else:
             t = 0
             for item in rowList:
-                indexToValue = convert.get(t, None)
+                indexToValue = pf.data.fromFromIndexToValue.get(t, None)
                 if indexToValue != None:
-                    valueToNewIndex = convert.get(indexToValue, None)
+                    valueToNewIndex = pf.data.fromValueToToIndex.get(indexToValue, None)
                     listToAppend[valueToNewIndex] = item
                 else:
                     pass
                 t += 1
 
             ###### calc data after putting in all given values for a row ##########
-            calculateDataPoints(listToAppend, convert, location, species)
-            csvOperations.append_list_as_row(t, listToAppend)
+            calculateDataPoints(listToAppend, location, species)
+            print("Appending : ", listToAppend)
+            csvOperations.append_list_as_row(toName, listToAppend)
 
 
 
-def calculateDataPoints(listToAppend, convert, location, species):
+def calculateDataPoints(listToAppend, location, species):
     if csvOperations.hasData(listToAppend):
+        convert = pf.data.fromValueToToIndex
+
         # calc date
         date = listToAppend[convert["local_device_time"]]
         if date != 0 or date != None:
