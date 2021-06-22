@@ -1,9 +1,6 @@
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
-from pydrive.files import ApiRequestError
-import sys
-from datetime import date
-from yaml.events import DocumentStartEvent
+import serialNums
 
 def uploadFile(fileToUpload):
     gauth = GoogleAuth()
@@ -22,12 +19,17 @@ def uploadFile(fileToUpload):
     gauth.SaveCredentialsFile("conf/mycreds.txt")
 
     drive = GoogleDrive(gauth)
-    file1 = drive.CreateFile({'title': str(date.today()) + fileToUpload})
-    file1.SetContentFile(fileToUpload)
-    try:
-        file1.Upload() # Files.insert()
-    except ApiRequestError:
-        sys.exit("Error uploading file due to an API issue. Try again")
+
+    folderName = serialNums.private.returnFolderName() # Please set the folder name.
+
+    folders = drive.ListFile(
+        {'q': "title='" + folderName + "' and mimeType='application/vnd.google-apps.folder' and trashed=false"}).GetList()
+    for folder in folders:
+        if folder['title'] == folderName:
+            file2 = drive.CreateFile({'parents': [{'id': folder['id']}]})
+            file2.SetContentFile(fileToUpload)
+            file2.Upload()
+
 
 if __name__ == "__main__":
     testInput = input("Give your file name : ")

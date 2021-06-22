@@ -1,7 +1,5 @@
-from csv import writer, reader, DictWriter
+from csv import writer, DictWriter
 import csv
-import pandas as pd
-
 from posixpath import join
 import datetime, shutil
 
