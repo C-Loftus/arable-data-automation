@@ -31,6 +31,8 @@ python3 main.py foo.csv bar.csv
 ```
 * Change the serialNums.py file (private, not uploaded to github since it contains secrets) to include the folder path on Google Drive you want or any extra sensors
 
+If you are a future year's team and need access to serialNums.py with the private arable API data, please email me. 
+
 ### Status
 My internship will continue until the end of the summer, so this project is still a work in progress and will be adapted depending on what the team needs.
 
