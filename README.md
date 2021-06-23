@@ -15,7 +15,7 @@ chmod +x setupWizard.sh
 ./setupWizard.sh
 ```
 #### Manual Setup
-where $name and $pass are your arable username and password
+where $name and $pass are your arable username and password and where pathToClientSecrets is the path to the client_secrets.json file
 ```
 mkdir conf/
 cp pathToClientSecrets/client_secrets.json conf/.
