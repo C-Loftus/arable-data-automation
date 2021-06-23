@@ -8,11 +8,14 @@ This repository holds the code that was used for automating the data processing.
 * Requirements: Python3, pip3, bash (for optional setupWizard.sh), requests==2.22.0, PyDrive==1.3.1, arablepy==0.1, python-dotenv==0.18.0
 * Download arable daily .csv files in Fahrenheit with normal export settings. Download only the dates you want to append
 * Run the setup script or manually install dependencies and setup credentials.
+
+#### Automatic Setup
 ```
 chmod +x setupWizard.sh
 ./setupWizard.sh
 ```
-or alternatively, where name and pass are your arable username and password
+#### Manual Setup
+where $name and $pass are your arable username and password
 ```
 mkdir conf/
 cp pathToClientSecrets/client_secrets.json conf/.
