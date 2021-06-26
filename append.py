@@ -5,7 +5,7 @@ import plantFormulas
 
 ARABLE_DEFAULT_HEADER = "local_device_time"
 
-def createRowToAppend(toName, f, location, species):    
+def appendAllValidRows(toName, f, location, species):    
     if __debug__:
         print("\nENTERING READER APPEND LOOP\n")
 
@@ -64,6 +64,8 @@ def calculateDataPoints(listToAppend, location, species):
         listToAppend[convert["photosynthetic_rate"]] = \
             plantFormulas.photosyntheticRateCalc((listToAppend[convert["NDVI"]]), \
             (listToAppend[convert["SWdw"]]))
+
+        listToAppend[convert["T_base"]] = priv.TBase[species]
     else:
         # don't do anything on an empty row
         if __debug__:

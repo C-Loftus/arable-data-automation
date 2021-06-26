@@ -20,15 +20,29 @@ def uploadFile(fileToUpload):
 
     drive = GoogleDrive(gauth)
 
-    folderName = serialNums.private.returnFolderName() # Please set the folder name.
+    folderName = serialNums.private.returnFolderName() # set the folder name.
 
     folders = drive.ListFile(
         {'q': "title='" + folderName + "' and mimeType='application/vnd.google-apps.folder' and trashed=false"}).GetList()
+
+
+
+    file_list = drive.ListFile({'q': "'root' in parents and trashed=false"}).GetList()
+    for tempFile in file_list:
+        if tempFile['parents'] == [{"kind": "drive#parentReference", "id": serialNums.private.driveBackupFolderNumber()}]:
+            tempid = tempFile['id']
+            temp = drive.CreateFile({'id': tempid})
+            temp['parents'] = [{"kind": "drive#parentReference", "id": serialNums.private.driveBackupFolderNumber()}]
+            temp.Upload()
+
+
     for folder in folders:
         if folder['title'] == folderName:
             file2 = drive.CreateFile({'parents': [{'id': folder['id']}]})
             file2.SetContentFile(fileToUpload)
             file2.Upload()
+
+
 
 
 if __name__ == "__main__":
