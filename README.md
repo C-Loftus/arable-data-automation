@@ -5,7 +5,8 @@ This summer I worked with Princeton's High Meadow Environmental Institute to gat
 This repository holds the code that was used for automating the data processing. It gathers data from remote field sensors made by Arable, exports it using the Arable API, processes it into a new CSV format, and uploads it to Google Drive with the Drive API so our team can all view it.  
 
 ### How to setup
-* Requirements: Python3, pip3, bash (for optional setupWizard.sh), requests==2.22.0, PyDrive==1.3.1, arablepy==0.1, python-dotenv==0.18.0
+* Requirements: Python3, pip3, bash (for optional setupWizard.sh), requests==2.22.0, PyDrive==1.3.1, arablepy==0.1, python-dotenv==0.18.0 (handleded by requirements.txt and pip3)
+* serialNums.py : This is a file not in this repo for security purposes. It is located in the shared Google Drive since it has sensitive data related to API Keys and Arable sensor serial numbers. Contact me if  you for some reason don't have access to this. 
 * Download arable daily .csv files in Fahrenheit with normal export settings. Download only the dates you want to append
 * Run the setup script or manually install dependencies and setup credentials.
 
