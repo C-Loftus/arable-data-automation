@@ -69,14 +69,12 @@ echo "Enter your password:"
 read pass
 if [ -f ".env" ]; then
     echo ".env file found, passing in credentials"
-    echo "USERN=$name" >> .env
-    echo "PASSW=$pass" >> .env
 else
     ".env file not found, creating it now and then passing in credentials"
     touch .env
-    echo "USERN=$name" >> .env
-    echo "PASSW=$pass" >> .env
 fi
+echo "USERN=$name" >> .env
+echo "PASSW=$pass" >> .env
 
 echo "Setup finished successfully."
 echo "Consult the README.md file on instructions for running the program."
