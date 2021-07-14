@@ -1,3 +1,4 @@
+import mimetypes
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 import serialNums
@@ -46,7 +47,7 @@ def uploadFile(fileToUpload):
         {'q': "title='" + folderName + "' and mimeType='application/vnd.google-apps.folder' and trashed=false"}).GetList()
     for folder in folders:
         if folder['title'] == folderName:
-            file2 = drive.CreateFile({'parents': [{'id': folder['id']}]})
+            file2 = drive.CreateFile({'parents': [{'id': folder['id']}], 'mimetype': 'application/vnd.google-apps.spreadsheet'})
             file2.SetContentFile(fileToUpload)
             file2.Upload()
 
@@ -86,16 +87,19 @@ def downloadFile():
     for file in allFiles:
         file2 = drive.CreateFile({'id': file['id']})
         file2['parents'] = [{"kind": "drive#parentReference", "id": serialNums.private.driveBackupFolderNumber()}]
+    
         try:
-            file2.GetContentFile("csv/eere")
+            name = "csv/" + file2['title']
+            file2.GetContentFile(name, mimetype='text/csv')
             filesDownloaded += 1
         except:
             # it was a folder if it fails, which is fine so just pass without doing anything
-            print("Failure downloading contents from file named: '", file2["title"], "'If it is a directory, ignore this error. \
-                PyDrive only downloads files, not directories, so this is to be expected.")
+            print("Failure downloading contents from file named: '", file2["title"], "'If it is a directory, ignore this error.\n \
+        PyDrive only downloads files, not directories, so this is to be expected.\n")
     return filesDownloaded
         
 
 if __name__ == "__main__":
     testInput = input("Give your file name : ")
     uploadFile(testInput)
+    # downloadFile()

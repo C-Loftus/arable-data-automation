@@ -5,45 +5,50 @@ import plantFormulas
 
 ARABLE_DEFAULT_HEADER = "local_device_time"
 
-def appendAllValidRows(toName, f, location, species):    
+def appendAllValidRows(toName, f):    
     if __debug__:
         print("\nENTERING READER APPEND LOOP\n")
 
     reader = csv.reader(f)
-    foundHeaders = False
+    print("Reading from", f)
 
+    # don't want to append the first row since those are just the column names
+    reader.__next__()
 
     for rowList in reader:
         listToAppend = [None] * 30
-        if foundHeaders == False and len(rowList) != 0:
-            if rowList[0] == ARABLE_DEFAULT_HEADER:
-                foundHeaders = True
-        else:
-            indexOfItem = 0
-            for item in rowList:
-                # converts from old index to the val assoc. with it
-                indexToValue = priv.fromFromIndexToValue.get(indexOfItem, None)
-                # if a valid val was found, do the conversion to get the index in the output csv file
-                if indexToValue != None:
-                    valueToNewIndex = priv.fromValueToToIndex.get(indexToValue, None)
-                    listToAppend[valueToNewIndex] = item
-                else:
-                    if __debug__:
-                        print("Item:", item, "can't be converted at the unused index:", indexOfItem)
-                indexOfItem += 1
+        indexOfItem = 0
+        for item in rowList:
+            # converts from old index to the val assoc. with it
+            indexToValue = priv.fromFromIndexToValueNEW.get(indexOfItem, None)
+            # if a valid val was found, do the conversion to get the index in the output csv file
+            if indexToValue != None:
+                valueToNewIndex = priv.fromValueToToIndex.get(indexToValue, None)
+                listToAppend[valueToNewIndex] = item
+            else:
+                if __debug__:
+                    print("Item:", item, "can't be converted at the unused index:", indexOfItem)
+            indexOfItem += 1
+        ###### calc data after putting in all given values for a row ##########
+        calculateDataPoints(listToAppend)
 
-            ###### calc data after putting in all given values for a row ##########
-            calculateDataPoints(listToAppend, location, species)
-            if __debug__:
-                print("Appending : ", listToAppend)
-            csvOperations.append_list_as_row(toName, listToAppend)
+        print("\nAppending : ", listToAppend)
+        csvOperations.append_list_as_row(toName, listToAppend)
 
 
 # all strings in this func are column headers for things that need to be calculated. 
 # They aren't output by default in the arable sensor
-def calculateDataPoints(listToAppend, location, species):
+def calculateDataPoints(listToAppend):
     if csvOperations.hasData(listToAppend):
         convert = priv.fromValueToToIndex
+
+
+        sensorID = listToAppend[convert["device"]]
+        # expand to full name 
+        species = priv.sensorLocations[sensorID].split(" ")[1]
+
+        location = priv.sensorLocations[sensorID].split(" ")[0]
+
 
         # calc date
         date = listToAppend[convert["local_device_time"]]
