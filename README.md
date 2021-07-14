@@ -1,12 +1,12 @@
 # Arable-Data-Automation
 ### About
-This summer I worked with Princeton's High Meadow Environmental Institute to gather and process data about different agricultural practices around the state of New Jersey.
+During the summer of 2021 I worked with Princeton University's High Meadow Environmental Institute to gather and process data about different agricultural practices around the state of New Jersey.
 
 This repository holds the code that was used for automating the data processing. It gathers data from remote field sensors made by Arable, exports it using the Arable API, processes it into a new CSV format, and uploads it to Google Drive with the Drive API so our team can all view it.  
 
 ### How to setup
-* Requirements: Python3, pip3, bash (for optional setupWizard.sh), requests==2.22.0, PyDrive==1.3.1, arablepy==0.1, python-dotenv==0.18.0 (handleded by requirements.txt and pip3)
-* serialNums.py : This is a file not in this repo for security purposes. It is located in the shared Google Drive since it has sensitive data related to API Keys and Arable sensor serial numbers. Contact me if  you for some reason don't have access to this. 
+* Requirements: Python3, pip3, bash (for optional setupWizard.sh), requests==2.22.0, PyDrive==1.3.1, arablepy==0.1, python-dotenv==0.18.0 (though Python dependencies are of course automatically handleded by requirements.txt and pip3)
+* serialNums.py : This is a file not in this repo for security purposes. It is located in the shared Google Drive since it has private info like farm names and Arable sensor serial numbers. Contact me if  you for some reason don't have access to this. 
 * Download arable daily .csv files in Fahrenheit with normal export settings. Download only the dates you want to append
 * Run the setup script or manually install dependencies and setup credentials.
 
@@ -32,7 +32,7 @@ python3 main.py foo.csv bar.csv
 ```
 * Change the serialNums.py file (private, not uploaded to github since it contains secrets) to include the folder path on Google Drive you want or any extra sensors
 
-If you are a future year's team and need access to serialNums.py with the private arable API data, please email me. 
+If you are a future year's team and need access to serialNums.py, please email me. 
 
 ### Status
 My internship will continue until the end of the summer, so this project is still a work in progress and will be adapted depending on what the team needs.
