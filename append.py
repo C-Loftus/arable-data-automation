@@ -53,7 +53,7 @@ def calculateDataPoints(listToAppend):
         # calc date
         date = listToAppend[convert["local_device_time"]]
         if date != 0 or date != None:
-            listToAppend[convert["local_device_time"]] = csvOperations.changeTimeFormat(date)
+            listToAppend[convert["local_device_time"]] = csvOperations.parseTime(date)
         # calc julian date
         if listToAppend[convert["local_device_time"]] != None:
             listToAppend[convert["julian_date"]] = csvOperations.calcJulian(listToAppend[convert["local_device_time"]])

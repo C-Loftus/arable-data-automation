@@ -5,12 +5,22 @@ from serialNums import private as priv
 import append
 import drive
 import pandas as pd
-import csv
 import glob, os.path
 
 # constants used for clarity
 ONLY_ONE_VALID_FILE = 1
 ONLY_ELEMENT = 0
+
+def cleanUpCSVDir():
+    filelist = glob.glob(os.path.join("csv", "*.csv"))
+    for f in filelist:
+        os.remove(f)
+
+def cleanUpTempDir():
+    filelist = glob.glob(os.path.join("filesToReadThenDelete", "*.csv"))
+    for f in filelist:
+        os.remove(f)
+
 
 def main():
     print("Starting Program\n")
@@ -112,58 +122,9 @@ def main():
     drive.uploadFile("Data Tracking Template")
 
     cleanUpCSVDir()
-    # cleanUpTempDir()
+    cleanUpTempDir()
 
 
 
 if __name__== "__main__":
     main()
-
-
-
-
-def cleanUpCSVDir():
-    filelist = glob.glob(os.path.join("csv", "*.csv"))
-    for f in filelist:
-        os.remove(f)
-
-def cleanUpTempDir():
-    filelist = glob.glob(os.path.join("filesToReadThenDelete", "*.csv"))
-    for f in filelist:
-        os.remove(f)
-
-
-
-
-
-            # with open(fromName,  'r', newline='') as f:
-            #     # get the title of the farm
-            #     location = None
-            #     species = None
-            #     for line in f:
-            #         line = line.replace(",", " ").replace("\"", " ").split(" ")
-            #         if "Location" in line:
-            #             # this uses hardcoded values since arable 
-            #             # csv output is always the same format
-
-            #             # check to make sure you are taking data
-            #             # from a valid farm/crop
-            #             try:
-            #                 farmInList = priv.farms[line[2]]
-            #             except KeyError:
-            #                 print(line[2])
-            #                 sys.exit("Farm not found in list")
-            #             location = line[2]
-            #             try: 
-            #                 species = priv.speciesDict[line[3]]
-            #             except KeyError:
-            #                 print(line[3])
-            #                 sys.exit("Crop not found in list")
-
-            #         if "°C" in line:
-            #             sys.exit("Temperature is in Celcius instead of Fahrenheit. \
-            #                 Reconfigure the output in arable")
-
-            #     print("Getting data from", location, species)
-
-            ### append data into array after assuring valid data ########

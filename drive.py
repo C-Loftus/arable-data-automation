@@ -1,8 +1,6 @@
-import mimetypes
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 import serialNums
-import json
 
 def uploadFile(fileToUpload):
     ### Setup Authentications
@@ -47,7 +45,8 @@ def uploadFile(fileToUpload):
         {'q': "title='" + folderName + "' and mimeType='application/vnd.google-apps.folder' and trashed=false"}).GetList()
     for folder in folders:
         if folder['title'] == folderName:
-            file2 = drive.CreateFile({'parents': [{'id': folder['id']}], 'mimetype': 'application/vnd.google-apps.spreadsheet'})
+            file2 = drive.CreateFile({'parents': [{'id': folder['id']}] , 'mimetype': 'application/vnd.google-apps.spreadsheet'
+            })
             file2.SetContentFile(fileToUpload)
             file2.Upload()
 

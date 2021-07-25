@@ -1,14 +1,9 @@
-alias
-backup/
 .*
 __pycache__
-src/serialNums.py
 conf/
 csv/
 Pipfile
 Pipfile.lock
 *.csv
-src/*
 serialNums.py
-merge.py
-arable.c
+filesToReadThenDelete/*

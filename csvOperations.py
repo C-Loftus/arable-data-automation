@@ -33,6 +33,14 @@ def changeTimeFormat(date):
     except:
         return None
 
+# the date parser for the arable format
+def parseTime(date):
+    try:
+        t = date.replace('T', '/').split('/')
+        return (t[0] + "/" + t[1] + "/" + t[3])
+    except:
+        return None
+
 def hasData(input: list):
     defaultData = 2
     data = 0
@@ -59,3 +67,10 @@ def append_dict_as_row(file_name, dict_of_elem, allFieldNames):
         dict_writer = DictWriter(write_obj, fieldnames=allFieldNames)
         # Add dictionary word to csv
         dict_writer.writerow(dict_of_elem)
+
+
+
+# if __name__ == "__main__":
+#     v = parseTime("07/24T20:00:00/2021")
+#     print(v) 
+#     print(calcJulian(v))
