@@ -25,13 +25,13 @@ echo "PASSW=$pass" >> .env
 pip install -r requirements.txt 
 ```
 ### How to run.
-* The program can ran either manually or with two argument inputs or automatically by downloading the files to use. 
-* To use it manually, run the program with the first argument as the file you want to append to and the first file as the one you will draw data from.
+* The program can be ran either manually or with two argument inputs or automatically by downloading the files to use from the team drive.
+* To use it manually, run the program with the first argument as the file you want to append to and the second file as the one you will draw data from.
 ```
 # where foo.csv is the csv file you are adding data to and where bar.csv is the csv file you are drawing data from
 python3 main.py foo.csv bar.csv 
 ```
-* To run automatically, just run the main.py file
+* To run with automatic downloads, just run the main.py file
 ```
 python3 main.py
 ```
