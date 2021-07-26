@@ -65,7 +65,7 @@ def calculateDataPoints(listToAppend):
 
         listToAppend[convert["farm"]] = location
         listToAppend[convert["growing_environment"]] = plantFormulas.environment(listToAppend[convert["device"]])
-        listToAppend[convert["crop"]] = species
+        listToAppend[convert["crop"]] = priv.speciesDict[species]
         listToAppend[convert["photosynthetic_rate"]] = \
             plantFormulas.photosyntheticRateCalc((listToAppend[convert["NDVI"]]), \
             (listToAppend[convert["SWdw"]]))

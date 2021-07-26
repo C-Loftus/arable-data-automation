@@ -39,7 +39,12 @@ def parseTime(date):
         t = date.replace('T', '/').split('/')
         return (t[0] + "/" + t[1] + "/" + t[3])
     except:
-        return None
+        try:
+            t = date.replace('T', '-').split('-')
+            return (t[1] + "/" + t[2] + "/" + t[0])
+        except:
+            return None
+
 
 def hasData(input: list):
     defaultData = 2
