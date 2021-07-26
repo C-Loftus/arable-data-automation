@@ -25,12 +25,17 @@ echo "PASSW=$pass" >> .env
 pip install -r requirements.txt 
 ```
 ### How to run.
-* Run the program with the first argument as the file you want to append to and the first file as the one you will draw data from.
+* The program can ran either manually or with two argument inputs or automatically by downloading the files to use. 
+* To use it manually, run the program with the first argument as the file you want to append to and the first file as the one you will draw data from.
 ```
 # where foo.csv is the csv file you are adding data to and where bar.csv is the csv file you are drawing data from
 python3 main.py foo.csv bar.csv 
 ```
-* Change the serialNums.py file (private, not uploaded to github since it contains secrets) to include the folder path on Google Drive you want or any extra sensors
+* To run automatically, just run the main.py file
+```
+python3 main.py
+```
+* For correct behavior, change the serialNums.py file (private, not uploaded to github since it contains secrets) to include the folder path on Google Drive you want or any extra sensors. Make sure you have the correct directory structure, as shown in the setup wizard and README. 
 
 If you are a future year's team and need access to serialNums.py, please email me. 
 
