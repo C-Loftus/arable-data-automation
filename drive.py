@@ -79,8 +79,6 @@ def downloadFile():
 
 
     ### Download all files in the folder and return the amount downloaded 
-    ##### The function that calls this one will need to handle the case in which 
-    ##### multiple files are downloaded. May not be desirable.
     allFiles = drive.ListFile({'q': "'" + folderId + "' in parents and trashed=false"}).GetList()
     filesDownloaded = 0
     for file in allFiles:
