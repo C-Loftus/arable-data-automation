@@ -40,5 +40,4 @@ python3 main.py
 If you are a future year's team and need access to serialNums.py, please email me. 
 
 ### Status
-My internship will continue until the end of the summer, so this project is still a work in progress and will be adapted depending on what the team needs.
-
+This program is stable and essentially finished to coincide with the completion of my internship. 
