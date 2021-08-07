@@ -11,11 +11,15 @@ import glob, os.path
 ONLY_ONE_VALID_FILE = 1
 ONLY_ELEMENT = 0
 
+# removes files intermediatary files between appending and doing
+# pandas operations
 def cleanUpCSVDir():
     filelist = glob.glob(os.path.join("csv", "*.csv"))
     for f in filelist:
         os.remove(f)
 
+# cleans up all csv's that were downloaded from the api.
+# don't need them after running the program.
 def cleanUpTempDir():
     filelist = glob.glob(os.path.join("filesToReadThenDelete", "*.csv"))
     for f in filelist:
@@ -23,13 +27,12 @@ def cleanUpTempDir():
 
 
 def main():
-    print("Starting Program\n")
     toName = None
     fromName = None
      # will be filled with files in ./filesToReadThenDelete by default
     fileInFromDirectory = []
 
-    try:
+    if len(sys.argv) >= 2 :
         if sys.argv[1] == "--manual":
             toName = input("Input the csv file you want to append to: ")
             fromName = input("Input the csv file you want to draw data from: ")
@@ -40,11 +43,8 @@ def main():
                 This program automatically gets file names, so you need to specify the flag \
                 to override this behavior. ")
 
-    # this exception means that len(argv) < 2 so we  know there aren't
-    # any arguments passed in so we can get the file names automatically
-    except IndexError:
-
-
+    # we checked the manual case and it didn't run so now we can get the file names automatically
+    else:
         ## If there is only one file downloaded you know it is the only one you want to append to
         if drive.downloadFile() == ONLY_ONE_VALID_FILE:
             filesInCSVDirectory = [name for name in os.listdir('csv/')] #if os.path.isfile(name)]
@@ -62,10 +62,6 @@ def main():
         ### Creates a list with all the csv files you read from
         fileInFromDirectory = [name for name in \
              os.listdir('filesToReadThenDelete/')]
-
-    except:
-        sys.exit("Invalid Input. Exiting...")
-
 
     if __debug__:
         if len(fileInFromDirectory) < 1:
@@ -95,7 +91,7 @@ def main():
     # - the `inplace=True` means that the data structure is changed and
     #   the duplicate rows are gone  
 
-    ## TODO: Replace drop duplicates with a more efficient
+    ## TODO: drop duplicates could be accomplished with a more efficient
     ## way to appending. i.e. keeping a list of the last appended
     ## day and changing the API query.
 
@@ -108,7 +104,7 @@ def main():
     # upload it with the parameters specified in serialNums.py
 
 
-    # hacky fix
+    # hacky fix to remove blank escaped cells
     # explanation:
     # pandas adds a \" char at the start of lines with blank cells 
     # for some reason. I need to remove the quotes otherwise the 
