@@ -7,3 +7,4 @@ Pipfile.lock
 *.csv
 serialNums.py
 filesToReadThenDelete/*
+Data Tracking Template

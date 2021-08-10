@@ -14,6 +14,8 @@ ONLY_ELEMENT = 0
 # removes files intermediatary files between appending and doing
 # pandas operations
 def cleanUpCSVDir():
+    if __debug__:
+        print("Running CSV cleanup")
     filelist = glob.glob(os.path.join("csv", "*.csv"))
     for f in filelist:
         os.remove(f)

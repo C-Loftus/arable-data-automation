@@ -1,5 +1,5 @@
 import csv
-import arableAPI,  csvOperations
+import csvOperations
 from serialNums import private as priv
 import plantFormulas
 
@@ -32,7 +32,8 @@ def appendAllValidRows(toName, f):
         ###### calc data after putting in all given values for a row ##########
         calculateDataPoints(listToAppend)
 
-        print("\nAppending : ", listToAppend)
+        if __debug__:
+            print("\nAppending : ", listToAppend)
         csvOperations.append_list_as_row(toName, listToAppend)
 
 
